@@ -27,63 +27,7 @@ class Net(nn.Module):
         output = F.log_softmax(x, dim=1)
 
         return output
-# class Net(nn.Module):
-#     def __init__(self):
-#         super(Net, self).__init__()
-#         self.conv1 = nn.Conv2d(1, 64, (12, 2))
-#         self.conv2 = nn.Conv2d(64, 128, (12, 2))
-#
-#
-#         self.dropout1 = nn.Dropout(0.25)
-#         self.dropout2 = nn.Dropout(0.5)
-#
-#         self.fc1 = nn.Linear(356352, 128)
-#         self.fc2 = nn.Linear(128, 15)
-#
-#     def forward(self, x):
-#
-#         x = self.conv1(x)
-#         x = nn.ReLU()(x)
-#         x = nn.MaxPool2d(2, 1)(x)
-#         x = self.dropout1(x)
-#         x = self.conv2(x)
-#         x = nn.ReLU()(x)
-#         x = nn.MaxPool2d(2, 1)(x)
-#         x = self.dropout2(x)
-#
-#         x = torch.flatten(x, 1)
-#         x = self.fc1(x)
-#         x = nn.ReLU()(x)
-#         x = self.fc2(x)
-#
-#         output = F.log_softmax(x, dim=1)
-#         return output
-# class Net(nn.Module):
-#     def __init__(self):
-#         super(Net, self).__init__()
-#         self.conv1 = torch.nn.Sequential(
-#             torch.nn.Conv2d(1, 128, (12, 2)),
-#             nn.ReLU(inplace=True),
-#             nn.MaxPool2d((2, 1)),
-#             torch.nn.Conv2d(128, 256, (12, 1)),
-#             nn.ReLU(inplace=True),
-#             nn.MaxPool2d((2, 1)),
-#             torch.nn.Conv2d(256, 512, (12, 1)),
-#             nn.ReLU(inplace=True),
-#             nn.MaxPool2d((2, 1)),
-#         )
-#         self.dense = torch.nn.Sequential(
-#             torch.nn.Linear(9600, 512),
-#             nn.ReLU(inplace=True),
-#             torch.nn.Linear(512, 15)
-#         )
-#     def forward(self, x):
-#         x = self.conv1(x)
-#         x = x.view(x.shape[0], -1)
-#         x = self.dense(x)
-#         output = F.log_softmax(x, dim=1)
-#
-#         return output
+
 
 class Mclr_Logistic(nn.Module):
     def __init__(self, input_dim = 2040, output_dim = 10):

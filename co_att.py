@@ -1,35 +1,8 @@
-# import tensorflow as tf
-# from tensorflow.python.keras import layers
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-# def mask_softmax(inputs, mask, dim):
-#
-#     e_x = tf.exp(inputs-tf.reduce_max(inputs, axis=dim, keepdims=True))
-#     mol = e_x * mask
-#     dem = tf.reduce_sum(mol, axis=dim, keepdims=True)
-#     return mol / dem
-#
-#
-# def self_attention(inputs, channel, sn, activation, name=None):
-#
-#     with tf.name_scope(name, 'self_attention', [inputs]):
-#         f = layers.dense(inputs, channel//2, activation, name='f')
-#         g = layers.dense(inputs, channel//2, activation, name='g')
-#         h = layers.dense(inputs, channel, activation, name='h')
-#
-#         s = tf.matmul(g, tf.transpose(f, [0, 2, 1]))
-#         beta = tf.nn.softmax(s, -2)
-#
-#         gamma = tf.get_variable("gamma", [1], tf.float64, initializer=tf.constant_initializer(0.0))
-#
-#         o = tf.matmul(beta, h,)
-#
-#         x = gamma * o + inputs
-#
-#     return x
+
 
 
 # def co_attention(inputs, num_q, num_v, units, activation=tf.nn.tanh):
@@ -97,58 +70,3 @@ class CoAttention(nn.Module):
         modality_v = attention_v*modality_v*num_v
         return modality_s, modality_v
 
-# def co_attention_2(input_q, input_v, num_q, num_v, units, activation=tf.nn.tanh):
-#
-#     """
-#     @inproceedings{lu2016hierarchical,
-#         title={Hierarchical question-image co-attention for visual question answering},
-#         author={Lu, Jiasen and Yang, Jianwei and Batra, Dhruv and Parikh, Devi},
-#         booktitle={Advances In Neural Information Processing Systems},
-#         pages={289--297},
-#         year={2016}
-#     }
-#     """
-#
-#     shape = input_v.get_shape().as_list()
-#
-#     correlation_matrix = tf.matmul(layers.dense(input_q, shape[-1], use_bias=False), input_v, transpose_b=True)
-#     if activation:
-#         correlation_matrix = activation(correlation_matrix)
-#
-#     modality_q_transform = layers.dense(input_q, units, use_bias=False)
-#     modality_v_transform = layers.dense(input_v, units, use_bias=False)
-#
-#     attention_q = modality_q_transform + tf.matmul(correlation_matrix, modality_v_transform)
-#     attention_v = modality_v_transform + tf.matmul(correlation_matrix, modality_q_transform, transpose_a=True)
-#     if activation:
-#         attention_q = activation(attention_q)
-#         attention_v = activation(attention_v)
-#
-#     modality_q = tf.nn.softmax(layers.dense(attention_q, 1, use_bias=False), -2) * input_q * num_q
-#     modality_v = tf.nn.softmax(layers.dense(attention_v, 1, use_bias=False), -2) * input_v * num_v
-#
-#     return tf.concat([modality_q, modality_v], -2)
-
-# if __name__ == "__main__":
-#     x1 = torch.randn([20,1,1,1024])
-#     x2 = torch.randn([20,1,1,1025])
-#     x1 = x1.permute(0, 1, 3, 2)
-#     x2 = x2.permute(0, 1, 3, 2)
-#     co_att = CoAttention(1, 256)
-#     output1, output2 = co_att(x1, x2, 1024, 1025, True)
-
-    # output1 = torch.flatten(output1, 1)
-    # output2 = torch.flatten(output2, 1)
-    # x = torch.cat([output1, output2], dim=1)
-    # # print(x.shape)
-    # print(output1.shape)
-    # print(output2.shape)
-
-    # a = [[2],[3],[4]]
-    # b = [[2,2], [2,2], [2,2]]
-    # a = torch.tensor(a)
-    # b = torch.tensor(b)
-    # c = a*b
-    # print(c)
-    # d = c*2
-    # print(d)
