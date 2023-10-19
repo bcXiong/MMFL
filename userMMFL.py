@@ -28,16 +28,12 @@ class UserPerAvg(User):
         # self.optimizer = torch.optim.SGD(self.model.parameters(), lr=self.learning_rate)
 
     def set_grads(self, new_grads):
-        if isinstance(new_grads, nn.fc.Parameter):  # isinstance() 会认为子类是一种父类类型，考虑继承关系
-            # nn.Parameter其中函数理解为类型转换函数      a = 2
-                                                 # >>> isinstance (a,int)
-                                                 # True
-                                                 # >>> isinstance (a,str)
-                                                 # False
+        if isinstance(new_grads, nn.fc.Parameter): 
+
             for model_grad, new_grad in zip(self.model.parameters(), new_grads):
                 model_grad.data = new_grad.data
         elif isinstance(new_grads, list):
-            for idx, model_grad in enumerate(self.model.parameters()):  # enumerate() 函数用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，同时列出数据和数据下标
+            for idx, model_grad in enumerate(self.model.parameters()):  
                 model_grad.data = new_grads[idx]
 
     def train(self, epochs):
@@ -107,7 +103,6 @@ class UserPerAvg(User):
         self.optimizer.zero_grad()
         self.optimizer1.zero_grad()
         self.model = self.model.cuda()
-        # print("xxxxxxxxxx",next(self.model.parameters()).device)
         output = self.model(X)
         loss = self.loss(output, y)
         loss.backward()
